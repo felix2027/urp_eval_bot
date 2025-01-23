@@ -1,14 +1,17 @@
 // ==UserScript==
 // @name         TJISE urp教务系统自动评教脚本（GPLv3修改版）
-// @namespace    https://greasyfork.org/zh-CN/users/
+// @namespace    https://greasyfork.org/zh-CN/users/985631-jamie-w
 // @version      1.2
-// @description  自动化五星评教，基于MIT原脚本修改的自动化五星评教工具（GPLv3协议）
+// @description   自动化五星评教，[基于MIT脚本修改] 自动化完成TJISE教务系统评教，自动填写五星评分和评语，GPLv3协议开源
 // @license      GPL-3.0
 // @author       felix2027
 // @match        https://surp-443.webvpn.tjise.edu.cn/student/teachingEvaluation/newEvaluation/*
 // @grant        none
+// @homepageURL  https://github.com/felix2027/urp_eval_bot
+// @supportURL   https://github.com/felix2027/urp_eval_bot/issues
+// @updateURL    https://github.com/felix2027/urp_eval_bot/blob/main/src/TJISE.js
+// @original-script https://greasyfork.org/zh-CN/scripts/521265
 // ==/UserScript==
-
 /*!
  * 原始代码版权声明（MIT许可证）
  * Copyright (c) 2023 GreasyFork用户"A BCD"（原脚本链接：https://greasyfork.org/zh-CN/scripts/521265）
