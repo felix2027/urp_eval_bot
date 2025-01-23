@@ -1,25 +1,27 @@
 # urp_eval_bot
-TJISE URP教务系统自动评教脚本
-[安装](https://greasyfork.org/zh-CN/scripts/522530-tjise-urp%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F%E8%87%AA%E5%8A%A8%E8%AF%84%E6%95%99%E8%84%9A%E6%9C%AC-gplv3%E4%BF%AE%E6%94%B9%E7%89%88)
+TJISE URP教务系统自动评教脚本（GPLv3协议）
+[![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![基于MIT原脚本修改](https://img.shields.io/badge/Original-MIT-orange)](https://greasyfork.org/zh-CN/scripts/521265)
 
-[//]: # "========== 使用说明 =========="
-## 📖 使用文档
-- [安装指南](#installation)
-- [功能说明](#features)
+## 🔗 快速链接
+- [立即安装](https://greasyfork.org/zh-CN/scripts/522530)
+- [查看源码](https://github.com/felix2027/urp_eval_bot)
+- [更新日志](CHANGELOG.md)
+- [报告问题](https://github.com/felix2027/urp_eval_bot/issues)
+
+> 🚨 注意
+> - 本脚本仅用于学习交流，禁止用于任何形式的刷评行为
+> - 使用前请确认学校相关规定允许自动化操作
+
+## ⚖️ 法律声明
+- 原始代码版权归 [GreasyFork用户a-bcd](https://greasyfork.org/zh-CN/scripts/521265) 所有（MIT协议）
+- 修改版本遵循 [GPLv3](LICENSE) 协议
+- 修改者：[felix2027](https://github.com/felix2027)
+
+## 📑 目录
+- [功能特性](#features)
+- [安装方法](#installation)
 - [常见问题](#faq)
+- [法律声明](#legal)
 
-[//]: # "========== 锚点定义 =========="
-<a name="installation"></a>
-## 🔧 安装方法
-1. 点击上方"安装"按钮
-2. 确认权限请求...
-
-<a name="features"></a>
-## 🚀 功能特性
-- 自动五星评教
-- 智能倒计时监控...
-
-<a name="faq"></a>
-## ❓ 常见问题
-**Q：需要登录吗？**  
-A：需先手动登录教务系统
+...
