@@ -1,0 +1,11 @@
+本作品包含基于MIT许可证的原始代码：
+- 原脚本名称：东软urp教务系统自动评教脚本
+- 作者：GreasyFork用户"abcd"
+- 来源：https://greasyfork.org/zh-CN/scripts/521265
+- 原始许可证：MIT (https://opensource.org/licenses/MIT)
+
+修改部分遵循GPLv3协议：
+- 修改者：felix2027
+- 修改版本：v1.4-GPL
+- 源代码：https://github.com/felix2027/urp_eval_bot/
+- 许可证：GPL-3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
