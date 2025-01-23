@@ -1,16 +1,44 @@
 // ==UserScript==
-// @name         TJISE urp教务系统自动评教脚本
+// @name         TJISE urp教务系统自动评教脚本（GPLv3修改版）
 // @namespace    https://greasyfork.org/zh-CN/users/
-// @version      1.0
-// @description  自动化五星评教
-// @author       joey
+// @version      1.2
+// @description  自动化五星评教，基于MIT原脚本修改的自动化五星评教工具（GPLv3协议）
+// @license      GPL-3.0
+// @author       felix2027
 // @match        https://surp-443.webvpn.tjise.edu.cn/student/teachingEvaluation/newEvaluation/*
 // @grant        none
 // ==/UserScript==
+
+/*!
+ * 原始代码版权声明（MIT许可证）
+ * Copyright (c) 2023 GreasyFork用户"A BCD"（原脚本链接：https://greasyfork.org/zh-CN/scripts/521265）
+ * Licensed under the MIT License (https://opensource.org/licenses/MIT)
+ * 
+ * 修改后代码版权声明（GPLv3）
+ * Copyright (C) 2024 joey
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 (function () {
   'use strict';
 
-  // 填写评教内容
+  // ================= 原始代码保留部分（MIT） =================
+  /**
+   * 填写评教内容 - 原始功能保留
+   * @original-author "A BCD"（原GreasyFork脚本作者）
+   * @source https://greasyfork.org/zh-CN/scripts/521265
+   */
   function fillEvaluation() {
     // 填写五星评分
     document.querySelectorAll('.radio-bj').forEach(group => {
@@ -29,87 +57,100 @@
     console.log("已完成五星评教填写");
   }
 
-  // 页面逻辑分支
+  // ================= 新增/修改代码部分（GPLv3） =================
+  /**
+   * 主控制逻辑（新增GPLv3代码）
+   * @license GPL-3.0
+   */
   function main() {
     const url = window.location.href;
 
-    // 如果当前页面是 /evaluation/*
+    // 页面路由控制
     if (url.includes('/student/teachingEvaluation/newEvaluation/evaluation/')) {
-      console.log("检测到评教页面，开始执行评教和计时器逻辑...");
-
-      // 执行五星评教
-      fillEvaluation();
-
-      // 定义定时器，每秒执行一次
-      const timer = setInterval(() => {
-        // 获取 timer 元素
-        const timerElement = document.getElementById("timer");
-
-        // 如果找不到 timer 元素，停止检测
-        if (!timerElement) {
-          console.warn("找不到 #timer 元素，停止检测");
-          clearInterval(timer);
-          return;
-        }
-
-        // 检查文本是否为 "0分00秒"
-        if (timerElement.textContent.trim() === "0分00秒") {
-          // 获取 savebutton 按钮
-          const saveButton = document.getElementById("savebutton");
-
-          // 如果找到按钮，则点击
-          if (saveButton) {
-            console.log("检测到计时器为 0分00秒，准备点击保存按钮");
-
-            // 创建并触发 click 事件
-            const clickEvent = new MouseEvent("click", {
-              bubbles: true,
-              cancelable: true,
-              view: window
-            });
-            saveButton.dispatchEvent(clickEvent);
-            console.log("保存按钮点击事件已触发");
-
-            // 停止定时器
-            clearInterval(timer);
-          } else {
-            console.warn("找不到 #savebutton 按钮");
-          }
-        }
-      }, 1000);
-    }
-
-    // 如果当前页面是 /index
-    else if (url.includes('/student/teachingEvaluation/newEvaluation/index')) {
-      console.log("检测到评教首页，尝试点击指定 Tab 元素...");
-
-      // 使用 XPath 查询指定元素
-      function getElementByXPath(xpath) {
-        return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-      }
-
-      const tabElement = getElementByXPath('//*[@id="myTab"]/li[1]/a');
-      if (tabElement) {
-        tabElement.click();
-        console.log("已点击指定 Tab 元素");
-        // 延迟1秒，确保 Tab 切换完成
-        setTimeout(() => {
-          // 查找评教按钮
-          const evaluationButtons = document.querySelectorAll('button[flag="jxpg"]');
-          if (evaluationButtons.length > 0) {
-            // 点击第一个评教按钮
-            evaluationButtons[0].click();
-            console.log("已点击评教按钮");
-          } else {
-            console.warn("找不到评教按钮");
-          }
-        }, 1000); // 延迟1秒以确保页面加载完毕
-      } else {
-        console.warn("找不到指定的 Tab 元素");
-      }
+      handleEvaluationPage();
+    } else if (url.includes('/student/teachingEvaluation/newEvaluation/index')) {
+      handleIndexPage();
     }
   }
 
-  // 页面加载完成后执行入口函数
-  window.addEventListener('load', main);
+  /**
+   * 评教页面处理（新增GPLv3代码）
+   */
+  function handleEvaluationPage() {
+    console.log("进入评教页面，启动自动化流程...");
+    fillEvaluation();
+    setupTimerMonitor();
+  }
+
+  /**
+   * 计时器监控模块（改进版）
+   * @license GPL-3.0
+   */
+  function setupTimerMonitor() {
+    const timerCheckInterval = 1000;
+    const timer = setInterval(() => {
+      const timerElement = document.getElementById("timer");
+      
+      if (!timerElement) {
+        console.warn("[GPL-Mod] 计时器元素缺失，终止监控");
+        return clearInterval(timer);
+      }
+
+      if (timerElement.textContent.trim() === "0分00秒") {
+        handleSaveOperation();
+        clearInterval(timer);
+      }
+    }, timerCheckInterval);
+  }
+
+  /**
+   * 保存操作处理（新增GPLv3代码）
+   */
+  function handleSaveOperation() {
+    const saveButton = document.getElementById("savebutton");
+    if (saveButton) {
+      console.log("[GPL-Mod] 触发自动保存");
+      saveButton.dispatchEvent(
+        new MouseEvent("click", {
+          bubbles: true,
+          cancelable: true,
+          view: window
+        })
+      );
+    } else {
+      console.warn("[GPL-Mod] 保存按钮未找到");
+    }
+  }
+
+  /**
+   * 首页处理逻辑（新增GPLv3代码）
+   */
+  function handleIndexPage() {
+    console.log("进入评教首页，初始化导航...");
+    const tabSelector = '#myTab > li:nth-child(1) > a';
+    const targetTab = document.querySelector(tabSelector);
+
+    if (targetTab) {
+      targetTab.click();
+      console.log("[GPL-Mod] 已激活评教列表");
+      setTimeout(checkEvaluationButtons, 1000);
+    }
+  }
+
+  /**
+   * 评教按钮检测（新增递归检测逻辑）
+   */
+  function checkEvaluationButtons() {
+    const buttons = document.querySelectorAll('button[flag="jxpg"]');
+    if (buttons.length > 0) {
+      buttons[0].click();
+      console.log("[GPL-Mod] 已触发评教入口");
+    } else {
+      console.log("[GPL-Mod] 评教按钮未加载，等待重试...");
+      setTimeout(checkEvaluationButtons, 500);
+    }
+  }
+
+  // 初始化入口
+  window.addEventListener('DOMContentLoaded', main);
 })();
